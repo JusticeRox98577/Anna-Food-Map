@@ -1,5 +1,8 @@
 import SwiftUI
 import SwiftData
+#if os(iOS)
+import UIKit
+#endif
 
 @main
 struct AnnaFoodMapApp: App {
@@ -12,6 +15,17 @@ struct AnnaFoodMapApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+
+    init() {
+        #if os(iOS)
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(Theme.ink900)]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(Theme.ink900)]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        #endif
+    }
 
     var body: some Scene {
         WindowGroup {
