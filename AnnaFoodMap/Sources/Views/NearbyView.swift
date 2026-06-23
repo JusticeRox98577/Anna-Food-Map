@@ -109,10 +109,17 @@ struct NearbyView: View {
             .pickerStyle(.menu)
             .tint(Theme.green600)
         case .custom:
-            TextField("e.g. \"korean bbq\", \"sushi\", \"vegetarian\"", text: $customQuery)
-                #if os(iOS)
-                .textFieldStyle(.roundedBorder)
-                #endif
+            VStack(alignment: .leading, spacing: 4) {
+                TextField("e.g. \"something with raw fish\", \"a juicy burger\"", text: $customQuery)
+                    #if os(iOS)
+                    .textFieldStyle(.roundedBorder)
+                    #endif
+                if FoodQueryInterpreter.isAvailable {
+                    Label("Interpreted on-device by Apple Intelligence", systemImage: "sparkles")
+                        .font(.system(size: 11))
+                        .foregroundStyle(Theme.ink500)
+                }
+            }
         }
     }
 
@@ -135,7 +142,13 @@ struct NearbyView: View {
         hasSearchedOnce = true
         do {
             let location = try await locationManager.requestLocation()
-            await searchManager.search(query: searchTerm, near: location)
+            let term: String
+            if mode == .custom {
+                term = await FoodQueryInterpreter.interpret(customQuery)
+            } else {
+                term = searchTerm
+            }
+            await searchManager.search(query: term, near: location)
         } catch {
             locationErrorMessage = error.localizedDescription
         }
