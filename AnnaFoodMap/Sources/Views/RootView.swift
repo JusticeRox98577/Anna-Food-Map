@@ -1,13 +1,14 @@
 import SwiftUI
 
 enum AppSection: String, CaseIterable, Identifiable {
-    case foods, phase, diary, reintro, reference
+    case foods, phase, nearby, diary, reintro, reference
     var id: String { rawValue }
 
     var title: String {
         switch self {
         case .foods: return "Foods"
         case .phase: return "Phase"
+        case .nearby: return "Nearby"
         case .diary: return "Diary"
         case .reintro: return "Reintro"
         case .reference: return "Reference"
@@ -18,6 +19,7 @@ enum AppSection: String, CaseIterable, Identifiable {
         switch self {
         case .foods: return "light.beacon.max.fill"
         case .phase: return "arrow.triangle.turn.up.right.diamond.fill"
+        case .nearby: return "location.magnifyingglass"
         case .diary: return "book.closed.fill"
         case .reintro: return "testtube.2"
         case .reference: return "list.bullet.rectangle.fill"
@@ -29,6 +31,7 @@ enum AppSection: String, CaseIterable, Identifiable {
         switch self {
         case .foods: FoodsView()
         case .phase: PhaseView()
+        case .nearby: NearbyView()
         case .diary: DiaryView()
         case .reintro: ReintroView()
         case .reference: ReferenceView()
