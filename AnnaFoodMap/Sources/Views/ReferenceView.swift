@@ -110,6 +110,7 @@ struct CategorySafeFoodsSheet: View {
                     Button("Done") { dismiss() }
                 }
             }
+            .readableNavigationBar()
         }
         #if os(macOS)
         .frame(minWidth: 420, minHeight: 480)

@@ -178,6 +178,7 @@ struct FoodDetailSheet: View {
                     Button("Done") { dismiss() }
                 }
             }
+            .readableNavigationBar()
         }
         #if os(macOS)
         .frame(minWidth: 380, minHeight: 320)

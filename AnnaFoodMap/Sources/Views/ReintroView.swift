@@ -168,6 +168,7 @@ struct ReintroForm: View {
                         .disabled(food.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
+            .readableNavigationBar()
         }
         #if os(macOS)
         .frame(minWidth: 420, minHeight: 460)

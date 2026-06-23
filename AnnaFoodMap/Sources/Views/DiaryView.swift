@@ -267,6 +267,7 @@ struct DiaryEntryForm: View {
                         .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
+            .readableNavigationBar()
         }
         #if os(macOS)
         .frame(minWidth: 420, minHeight: 480)

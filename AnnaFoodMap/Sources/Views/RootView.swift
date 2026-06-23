@@ -37,12 +37,46 @@ enum AppSection: String, CaseIterable, Identifiable {
 }
 
 struct RootView: View {
+    @State private var isLoading = true
+
     var body: some View {
-        #if os(macOS)
-        MacRootView()
+        ZStack {
+            if isLoading {
+                LoadingView()
+                    .transition(.opacity)
+            } else {
+                #if os(macOS)
+                MacRootView()
+                #else
+                iOSRootView()
+                #endif
+            }
+        }
+        .task {
+            try? await Task.sleep(for: .seconds(1.4))
+            withAnimation(.easeInOut(duration: 0.4)) {
+                isLoading = false
+            }
+        }
+    }
+}
+
+private struct ReadableNavigationBar: ViewModifier {
+    func body(content: Content) -> some View {
+        #if os(iOS)
+        content
+            .toolbarBackground(Theme.paper, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.light, for: .navigationBar)
         #else
-        iOSRootView()
+        content
         #endif
+    }
+}
+
+extension View {
+    func readableNavigationBar() -> some View {
+        modifier(ReadableNavigationBar())
     }
 }
 
@@ -75,6 +109,7 @@ struct iOSRootView: View {
             ForEach(AppSection.allCases) { section in
                 NavigationStack {
                     section.destination
+                        .readableNavigationBar()
                 }
                 .tabItem {
                     Label(section.title, systemImage: section.symbolName)
