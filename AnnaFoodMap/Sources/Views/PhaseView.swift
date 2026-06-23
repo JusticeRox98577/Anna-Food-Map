@@ -16,6 +16,8 @@ struct PhaseView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                PageHeader(title: "Phase Tracker")
+
                 progressStepper
                     .cardStyle()
 
@@ -31,7 +33,10 @@ struct PhaseView: View {
             .padding(16)
         }
         .background(Theme.bg)
-        .navigationTitle("Phase Tracker")
+        .navigationTitle("Phase")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     private var progressStepper: some View {

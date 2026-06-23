@@ -9,6 +9,8 @@ struct ReferenceView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                PageHeader(title: "Safe Foods Quick Reference")
+
                 Text("Tap a category to see Low FODMAP picks at a glance.")
                     .font(.system(size: 13.5))
                     .foregroundStyle(Theme.ink500)
@@ -23,7 +25,10 @@ struct ReferenceView: View {
             .padding(16)
         }
         .background(Theme.bg)
-        .navigationTitle("Safe Foods Quick Reference")
+        .navigationTitle("Reference")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(item: $selectedCategory) { category in
             CategorySafeFoodsSheet(category: category, onSelect: { food in
                 selectedCategory = nil

@@ -86,3 +86,13 @@ extension View {
         modifier(CardBackground())
     }
 }
+
+struct PageHeader: View {
+    let title: String
+
+    var body: some View {
+        Text(title)
+            .font(.system(size: 26, weight: .heavy))
+            .foregroundStyle(Theme.ink900)
+    }
+}

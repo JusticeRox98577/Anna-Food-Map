@@ -41,7 +41,8 @@ struct DiaryView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 16) {
+                PageHeader(title: "Symptom & Food Diary")
                 statRow
                 if let insight = insightText {
                     insightCard(insight)
@@ -70,7 +71,10 @@ struct DiaryView: View {
             .padding(16)
         }
         .background(Theme.bg)
-        .navigationTitle("Symptom & Food Diary")
+        .navigationTitle("Diary")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(isPresented: $showingForm) {
             DiaryEntryForm()
         }

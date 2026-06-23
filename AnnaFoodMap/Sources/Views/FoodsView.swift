@@ -17,13 +17,17 @@ struct FoodsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
+                PageHeader(title: "Food Traffic Light")
                 filterChips
                 foodList
             }
             .padding(16)
         }
         .background(Theme.bg)
-        .navigationTitle("Food Traffic Light")
+        .navigationTitle("Foods")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .searchable(text: $searchText, prompt: "Search foods (e.g. garlic, banana, oats)")
         .sheet(item: $selectedFood) { food in
             FoodDetailSheet(food: food)

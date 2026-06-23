@@ -9,7 +9,8 @@ struct ReintroView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 16) {
+                PageHeader(title: "Reintroduction Challenges")
                 statRow
                 addButton
 
@@ -28,7 +29,10 @@ struct ReintroView: View {
             .padding(16)
         }
         .background(Theme.bg)
-        .navigationTitle("Reintroduction Challenges")
+        .navigationTitle("Reintro")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(isPresented: $showingForm) {
             ReintroForm()
         }
