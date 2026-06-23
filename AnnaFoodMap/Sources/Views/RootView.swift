@@ -65,8 +65,6 @@ private struct ReadableNavigationBar: ViewModifier {
     func body(content: Content) -> some View {
         #if os(iOS)
         content
-            .toolbarBackground(Theme.paper, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.light, for: .navigationBar)
         #else
         content
