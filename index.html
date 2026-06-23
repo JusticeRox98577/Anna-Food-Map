@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>Low FODMAP Guide</title>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  :root{
+    --green-50:#f1f9f3;
+    --green-100:#dcefe1;
+    --green-200:#b8dfc4;
+    --green-300:#8ecda3;
+    --green-400:#5fb781;
+    --green-500:#3a9d63;
+    --green-600:#2c7e4e;
+    --green-700:#24643f;
+    --green-800:#1d5033;
+    --amber-100:#fff3d6;
+    --amber-400:#f5b942;
+    --amber-600:#c98a14;
+    --red-100:#fde2e1;
+    --red-400:#ef6b63;
+    --red-600:#c43d35;
+    --ink-900:#1c2622;
+    --ink-700:#3c4a44;
+    --ink-500:#647069;
+    --ink-300:#9aa6a0;
+    --paper:#ffffff;
+    --bg:#f6faf7;
+    --shadow-sm: 0 1px 3px rgba(28,38,34,0.08);
+    --shadow-md: 0 6px 20px rgba(28,38,34,0.10);
+    --shadow-lg: 0 14px 34px rgba(28,38,34,0.16);
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink-900);
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 84px;
+    min-height: 100vh;
+  }
+
+  a{color:inherit;}
+
+  /* ===== Header ===== */
+  .app-header{
+    position: sticky;
+    top:0;
+    z-index: 50;
+    background: linear-gradient(135deg, var(--green-600), var(--green-500));
+    color:#fff;
+    padding: 18px 20px 22px;
+    border-radius: 0 0 24px 24px;
+    box-shadow: var(--shadow-md);
+  }
+  .app-header .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+  }
+  .app-header .brand i{font-size:1.4rem;}
+  .app-header .tagline{
+    margin-top:4px;
+    font-size:0.85rem;
+    opacity:0.92;
+    font-weight:400;
+  }
+
+  /* ===== Layout ===== */
+  .container{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px 16px 8px;
+  }
+
+  .section{display:none; animation: fadeIn 0.35s ease;}
+  .section.active{display:block;}
+  @keyframes fadeIn{
+    from{opacity:0; transform: translateY(6px);}
+    to{opacity:1; transform: translateY(0);}
+  }
+
+  h2.section-title{
+    font-size:1.15rem;
+    margin: 4px 0 14px;
+    color: var(--green-800);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .card{
+    background: var(--paper);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 18px;
+    margin-bottom: 16px;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .card:hover{box-shadow: var(--shadow-md);}
+
+  /* ===== Bottom Nav ===== */
+  .tabbar{
+    position: fixed;
+    bottom:0; left:0; right:0;
+    background: var(--paper);
+    border-top: 1px solid var(--green-100);
+    display:flex;
+    z-index: 60;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 18px rgba(28,38,34,0.08);
+  }
+  .tab-btn{
+    flex:1;
+    background:none;
+    border:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    padding:8px 2px;
+    font-size: 0.65rem;
+    color: var(--ink-500);
+    border-radius: 12px;
+    cursor:pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+    font-family:inherit;
+  }
+  .tab-btn i{font-size:1.05rem;}
+  .tab-btn.active{
+    color: var(--green-600);
+    background: var(--green-50);
+    font-weight:600;
+  }
+  .tab-btn:active{transform: scale(0.94);}
+
+  /* ===== Search / Filter ===== */
+  .search-bar{
+    display:flex;
+    align-items:center;
+    background: var(--paper);
+    border: 1.5px solid var(--green-100);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    gap:10px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .search-bar:focus-within{
+    border-color: var(--green-400);
+    box-shadow: 0 0 0 4px var(--green-50);
+  }
+  .search-bar i{color: var(--ink-300);}
+  .search-bar input{
+    border:none;
+    outline:none;
+    flex:1;
+    font-size: 0.95rem;
+    background:transparent;
+    color: var(--ink-900);
+    font-family:inherit;
+  }
+
+  .chip-row{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom: 4px;
+    margin-bottom: 14px;
+    scrollbar-width:none;
+  }
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex: 0 0 auto;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--green-100);
+    background: var(--paper);
+    font-size: 0.8rem;
+    color: var(--ink-700);
+    cursor:pointer;
+    white-space:nowrap;
+    transition: all 0.2s ease;
+    font-family:inherit;
+  }
+  .chip.active{
+    background: var(--green-600);
+    border-color: var(--green-600);
+    color:#fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .chip:active{transform: scale(0.95);}
+
+  /* ===== Food list ===== */
+  .food-list{display:flex; flex-direction:column; gap:10px;}
+  .food-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background: var(--paper);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    box-shadow: var(--shadow-sm);
+    cursor:pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    border-left: 5px solid transparent;
+  }
+  .food-item:active{transform: scale(0.985);}
+  .food-item.green{border-left-color: var(--green-500);}
+  .food-item.yellow{border-left-color: var(--amber-400);}
+  .food-item.red{border-left-color: var(--red-400);}
+
+  .light-dot{
+    width: 14px; height:14px;
+    border-radius:50%;
+    flex:0 0 auto;
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.04);
+  }
+  .light-dot.green{background: var(--green-500);}
+  .light-dot.yellow{background: var(--amber-400);}
+  .light-dot.red{background: var(--red-400);}
+
+  .food-info{flex:1; min-width:0;}
+  .food-name{font-weight:600; font-size:0.95rem; color: var(--ink-900);}
+  .food-meta{font-size:0.75rem; color: var(--ink-500); margin-top:1px;}
+
+  .badge{
+    font-size:0.68rem;
+    font-weight:700;
+    padding: 3px 9px;
+    border-radius:999px;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  .badge.green{background: var(--green-100); color: var(--green-700);}
+  .badge.yellow{background: var(--amber-100); color: var(--amber-600);}
+  .badge.red{background: var(--red-100); color: var(--red-600);}
+
+  .empty-state{
+    text-align:center;
+    padding: 40px 16px;
+    color: var(--ink-500);
+  }
+  .empty-state i{font-size:2rem; color: var(--green-200); margin-bottom:10px; display:block;}
+
+  /* ===== Phase Tracker ===== */
+  .phase-progress{
+    display:flex;
+    align-items:center;
+    margin: 6px 0 22px;
+  }
+  .phase-step{
+    flex:1;
+    text-align:center;
+    position:relative;
+  }
+  .phase-step .dot{
+    width:34px; height:34px;
+    border-radius:50%;
+    background: var(--green-100);
+    color: var(--green-600);
+    display:flex; align-items:center; justify-content:center;
+    margin: 0 auto 8px;
+    font-weight:700;
+    font-size:0.9rem;
+    position:relative;
+    z-index:2;
+    transition: all 0.3s ease;
+    border: 2px solid var(--green-100);
+  }
+  .phase-step.done .dot{background: var(--green-500); color:#fff; border-color:var(--green-500);}
+  .phase-step.current .dot{
+    background: var(--paper);
+    border-color: var(--green-500);
+    color: var(--green-600);
+    box-shadow: 0 0 0 5px var(--green-50);
+  }
+  .phase-step .label{font-size:0.72rem; color: var(--ink-500); font-weight:600;}
+  .phase-step.current .label{color: var(--green-700);}
+  .phase-step:not(:last-child)::after{
+    content:'';
+    position:absolute;
+    top:17px; left:50%;
+    width:100%; height:3px;
+    background: var(--green-100);
+    z-index:1;
+  }
+  .phase-step.done:not(:last-child)::after{background: var(--green-400);}
+
+  .phase-detail{
+    background: var(--green-50);
+    border-radius: var(--radius-md);
+    padding:16px;
+    margin-top: 10px;
+  }
+  .phase-detail h3{margin:0 0 6px; color: var(--green-800); font-size:1rem;}
+  .phase-detail p{margin: 0 0 10px; font-size:0.87rem; color: var(--ink-700); line-height:1.5;}
+  .phase-detail ul{margin:0; padding-left:18px; font-size:0.85rem; color: var(--ink-700); line-height:1.6;}
+
+  .day-counter{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .day-counter .count{
+    font-size:1.6rem;
+    font-weight:800;
+    color: var(--green-700);
+  }
+  .day-counter .count span{font-size:0.85rem; font-weight:500; color:var(--ink-500);}
+
+  /* ===== Buttons ===== */
+  .btn{
+    border:none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-weight:600;
+    font-size:0.85rem;
+    cursor:pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    font-family:inherit;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .btn:active{transform: scale(0.96);}
+  .btn-primary{background: var(--green-600); color:#fff; box-shadow: var(--shadow-sm);}
+  .btn-primary:hover{background: var(--green-700);}
+  .btn-outline{background:#fff; color: var(--green-600); border:1.5px solid var(--green-200);}
+  .btn-outline:hover{background: var(--green-50);}
+  .btn-ghost{background:transparent; color: var(--ink-500); padding:8px 10px;}
+  .btn-danger{background: var(--red-100); color: var(--red-600);}
+  .btn-block{width:100%; justify-content:center;}
+  .btn-sm{padding:7px 13px; font-size:0.78rem;}
+
+  /* ===== Form elements ===== */
+  .field{margin-bottom:14px;}
+  .field label{
+    display:block;
+    font-size:0.8rem;
+    font-weight:600;
+    color: var(--ink-700);
+    margin-bottom:6px;
+  }
+  .field input[type=text],
+  .field input[type=date],
+  .field input[type=time],
+  .field select,
+  .field textarea{
+    width:100%;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--green-100);
+    font-size:0.9rem;
+    font-family:inherit;
+    color: var(--ink-900);
+    background:#fff;
+    outline:none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    border-color: var(--green-400);
+    box-shadow: 0 0 0 4px var(--green-50);
+  }
+  .field textarea{resize:vertical; min-height:64px;}
+
+  .severity-row{display:flex; gap:8px;}
+  .severity-opt{
+    flex:1;
+    text-align:center;
+    padding:9px 4px;
+    border-radius: var(--radius-sm);
+    border:1.5px solid var(--green-100);
+    cursor:pointer;
+    font-size:0.78rem;
+    font-weight:600;
+    color: var(--ink-500);
+    transition: all 0.2s ease;
+    user-select:none;
+  }
+  .severity-opt.sel-0.active{background:var(--green-100); border-color:var(--green-400); color:var(--green-700);}
+  .severity-opt.sel-1.active{background:var(--amber-100); border-color:var(--amber-400); color:var(--amber-600);}
+  .severity-opt.sel-2.active{background:var(--red-100); border-color:var(--red-400); color:var(--red-600);}
+
+  /* ===== Diary entries ===== */
+  .diary-entry{
+    background:#fff;
+    border-radius: var(--radius-md);
+    padding:14px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom:10px;
+    position:relative;
+  }
+  .diary-entry .top-row{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .diary-entry .when{font-size:0.72rem; color: var(--ink-500); font-weight:600;}
+  .diary-entry .meal{font-weight:700; font-size:0.92rem; margin: 4px 0 2px;}
+  .diary-entry .notes{font-size:0.82rem; color: var(--ink-700); margin-top:4px; line-height:1.4;}
+  .sev-pill{
+    font-size:0.68rem;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .sev-pill.s0{background:var(--green-100); color:var(--green-700);}
+  .sev-pill.s1{background:var(--amber-100); color:var(--amber-600);}
+  .sev-pill.s2{background:var(--red-100); color:var(--red-600);}
+  .del-btn{
+    position:absolute; top:10px; right:10px;
+    background:none; border:none; color: var(--ink-300);
+    cursor:pointer; font-size:0.9rem; padding:4px;
+  }
+  .del-btn:hover{color: var(--red-600);}
+
+  .day-group-title{
+    font-size:0.78rem;
+    font-weight:700;
+    color: var(--ink-500);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    margin: 18px 0 8px;
+  }
+  .day-group-title:first-child{margin-top:0;}
+
+  /* ===== Modal / Sheet ===== */
+  .overlay{
+    position:fixed; inset:0;
+    background: rgba(20,28,24,0.45);
+    z-index: 90;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .overlay.open{display:flex; animation: fadeIn 0.2s ease;}
+  .sheet{
+    background:#fff;
+    width:100%;
+    max-width: 720px;
+    max-height: 88vh;
+    overflow-y:auto;
+    border-radius: 24px 24px 0 0;
+    padding: 10px 20px 28px;
+    animation: slideUp 0.28s cubic-bezier(.2,.9,.3,1);
+  }
+  @keyframes slideUp{
+    from{transform: translateY(100%);}
+    to{transform: translateY(0);}
+  }
+  .sheet-handle{
+    width:40px; height:5px;
+    background: var(--green-100);
+    border-radius:99px;
+    margin: 8px auto 14px;
+  }
+  .sheet-header{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px;
+  }
+  .sheet-header h3{margin:0; font-size:1.05rem; color: var(--green-800);}
+  .sheet-close{
+    background: var(--green-50); border:none; width:32px; height:32px;
+    border-radius:50%; color: var(--ink-700); cursor:pointer; font-size:0.9rem;
+  }
+
+  /* Food detail sheet content */
+  .detail-light{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom: 14px;
+  }
+  .detail-light .light-dot{width:20px; height:20px;}
+  .detail-light .label{font-weight:700; font-size:1.1rem;}
+  .detail-row{margin-bottom:12px;}
+  .detail-row .k{font-size:0.72rem; font-weight:700; color: var(--ink-500); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px;}
+  .detail-row .v{font-size:0.9rem; color: var(--ink-900); line-height:1.5;}
+
+  /* ===== Reintro tracker ===== */
+  .test-card{
+    background:#fff; border-radius: var(--radius-md); padding:14px; box-shadow: var(--shadow-sm); margin-bottom:10px;
+  }
+  .test-card .head{display:flex; justify-content:space-between; align-items:center; gap:8px;}
+  .test-card .food-tag{font-weight:700; font-size:0.95rem;}
+  .test-card .grp{font-size:0.72rem; color: var(--ink-500); margin-top:2px;}
+  .status-pill{font-size:0.68rem; font-weight:700; padding:4px 10px; border-radius:999px;}
+  .status-pill.pass{background:var(--green-100); color:var(--green-700);}
+  .status-pill.fail{background:var(--red-100); color:var(--red-600);}
+  .status-pill.pending{background:var(--amber-100); color:var(--amber-600);}
+
+  /* ===== Quick reference categories ===== */
+  .cat-grid{display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:6px;}
+  .cat-card{
+    background:#fff; border-radius: var(--radius-md); padding:16px 14px;
+    box-shadow: var(--shadow-sm); cursor:pointer; text-align:center;
+    transition: transform 0.18s ease, box-shadow 0.2s ease;
+  }
+  .cat-card:active{transform: scale(0.96);}
+  .cat-card i{font-size:1.5rem; color: var(--green-500); margin-bottom:8px; display:block;}
+  .cat-card .name{font-weight:700; font-size:0.85rem; color: var(--ink-900);}
+  .cat-card .count{font-size:0.72rem; color: var(--ink-500); margin-top:2px;}
+
+  /* ===== Stat row (home/dashboard feel inside diary) ===== */
+  .stat-row{display:flex; gap:10px; margin-bottom:16px;}
+  .stat-box{
+    flex:1; background:#fff; border-radius: var(--radius-md);
+    padding:14px; text-align:center; box-shadow: var(--shadow-sm);
+  }
+  .stat-box .num{font-size:1.3rem; font-weight:800; color: var(--green-700);}
+  .stat-box .lbl{font-size:0.68rem; color: var(--ink-500); font-weight:600; margin-top:2px;}
+
+  .insight-box{
+    background: linear-gradient(135deg, var(--green-50), #fff);
+    border: 1px solid var(--green-100);
+    border-radius: var(--radius-md);
+    padding:14px;
+    margin-bottom:16px;
+    font-size:0.85rem;
+    color: var(--ink-700);
+    line-height:1.5;
+  }
+  .insight-box strong{color: var(--green-700);}
+
+  .toast{
+    position:fixed;
+    bottom: 90px;
+    left:50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--ink-900);
+    color:#fff;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size:0.82rem;
+    opacity:0;
+    pointer-events:none;
+    transition: all 0.3s ease;
+    z-index: 200;
+    white-space:nowrap;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.show{opacity:1; transform: translateX(-50%) translateY(0);}
+
+  ::-webkit-scrollbar{width:8px; height:8px;}
+  ::-webkit-scrollbar-thumb{background: var(--green-200); border-radius:99px;}
+
+  @media (min-width:640px){
+    .container{padding-top:24px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand"><i class="fa-solid fa-leaf"></i> Low FODMAP Guide</div>
+  <div class="tagline">Your calm companion through elimination, reintroduction &amp; personalization</div>
+</header>
+
+<div class="container">
+
+  <!-- ============ FOODS SECTION ============ -->
+  <section id="section-foods" class="section active">
+    <h2 class="section-title"><i class="fa-solid fa-traffic-light"></i> Food Traffic Light</h2>
+
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="foodSearch" placeholder="Search foods (e.g. garlic, banana, oats)...">
+    </div>
+
+    <div class="chip-row" id="lightFilters">
+      <div class="chip active" data-light="all">All Foods</div>
+      <div class="chip" data-light="green">🟢 Low FODMAP</div>
+      <div class="chip" data-light="yellow">🟡 Moderate</div>
+      <div class="chip" data-light="red">🔴 High FODMAP</div>
+    </div>
+
+    <div class="chip-row" id="catFilters">
+      <div class="chip active" data-cat="all">All Categories</div>
+    </div>
+
+    <div class="food-list" id="foodList"></div>
+  </section>
+
+  <!-- ============ PHASE TRACKER SECTION ============ -->
+  <section id="section-phase" class="section">
+    <h2 class="section-title"><i class="fa-solid fa-route"></i> Phase Tracker</h2>
+
+    <div class="card">
+      <div class="phase-progress" id="phaseProgress"></div>
+      <div class="phase-detail" id="phaseDetail"></div>
+
+      <div class="day-counter">
+        <div class="count" id="phaseDayCount">Day 1 <span>in this phase</span></div>
+        <button class="btn btn-outline btn-sm" id="resetPhaseDayBtn"><i class="fa-solid fa-rotate-left"></i> Reset day counter</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;color:var(--green-800);font-size:0.95rem;">Move to next phase</h3>
+      <p style="font-size:0.83rem;color:var(--ink-500);margin-bottom:12px;">Only advance when you and your care provider feel ready.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-outline btn-sm" id="prevPhaseBtn"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+        <button class="btn btn-primary btn-sm" id="nextPhaseBtn">Next Phase <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DIARY SECTION ============ -->
+  <section id="section-diary" class="section">
+    <h2 class="section-title"><i class="fa-solid fa-book-medical"></i> Symptom &amp; Food Diary</h2>
+
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" id="statEntries">0</div><div class="lbl">Entries</div></div>
+      <div class="stat-box"><div class="num" id="statStreak">0</div><div class="lbl">Day Streak</div></div>
+      <div class="stat-box"><div class="num" id="statBadDays">0</div><div class="lbl">Flare Days</div></div>
+    </div>
+
+    <div class="insight-box" id="insightBox" style="display:none;"></div>
+
+    <button class="btn btn-primary btn-block" id="addDiaryBtn"><i class="fa-solid fa-plus"></i> Log a meal or symptom</button>
+
+    <div id="diaryList" style="margin-top:18px;"></div>
+  </section>
+
+  <!-- ============ REINTRODUCTION SECTION ============ -->
+  <section id="section-reintro" class="section">
+    <h2 class="section-title"><i class="fa-solid fa-vial-circle-check"></i> Reintroduction Challenges</h2>
+
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" id="reintroTested">0</div><div class="lbl">Tested</div></div>
+      <div class="stat-box"><div class="num" id="reintroPassed">0</div><div class="lbl">Tolerated</div></div>
+      <div class="stat-box"><div class="num" id="reintroFailed">0</div><div class="lbl">Triggered</div></div>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="addReintroBtn"><i class="fa-solid fa-plus"></i> Log a new challenge</button>
+
+    <div id="reintroList" style="margin-top:18px;"></div>
+  </section>
+
+  <!-- ============ REFERENCE SECTION ============ -->
+  <section id="section-reference" class="section">
+    <h2 class="section-title"><i class="fa-solid fa-table-list"></i> Safe Foods Quick Reference</h2>
+    <p style="font-size:0.85rem;color:var(--ink-500);margin-top:-8px;margin-bottom:16px;">Tap a category to see Low FODMAP picks at a glance.</p>
+    <div class="cat-grid" id="refCatGrid"></div>
+  </section>
+
+</div>
+
+<nav class="tabbar">
+  <button class="tab-btn active" data-tab="foods"><i class="fa-solid fa-traffic-light"></i> Foods</button>
+  <button class="tab-btn" data-tab="phase"><i class="fa-solid fa-route"></i> Phase</button>
+  <button class="tab-btn" data-tab="diary"><i class="fa-solid fa-book-medical"></i> Diary</button>
+  <button class="tab-btn" data-tab="reintro"><i class="fa-solid fa-vial-circle-check"></i> Reintro</button>
+  <button class="tab-btn" data-tab="reference"><i class="fa-solid fa-table-list"></i> Reference</button>
+</nav>
+
+<!-- Food Detail Sheet -->
+<div class="overlay" id="foodOverlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h3 id="foodDetailName">Food</h3>
+      <button class="sheet-close" id="closeFoodSheet"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="foodDetailBody"></div>
+  </div>
+</div>
+
+<!-- Diary Entry Sheet -->
+<div class="overlay" id="diaryOverlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h3>Log Entry</h3>
+      <button class="sheet-close" id="closeDiarySheet"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form id="diaryForm">
+      <div class="field">
+        <label>Type</label>
+        <select id="entryType">
+          <option value="meal">Meal / Food</option>
+          <option value="symptom">Symptom only</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="date" id="entryDate" required>
+      </div>
+      <div class="field">
+        <label>Time</label>
+        <input type="time" id="entryTime" required>
+      </div>
+      <div class="field">
+        <label id="entryTitleLabel">What did you eat?</label>
+        <input type="text" id="entryTitle" placeholder="e.g. Grilled chicken, rice, spinach" required>
+      </div>
+      <div class="field">
+        <label>Symptom severity</label>
+        <div class="severity-row">
+          <div class="severity-opt sel-0" data-sev="0">😊 None</div>
+          <div class="severity-opt sel-1" data-sev="1">😐 Mild</div>
+          <div class="severity-opt sel-2" data-sev="2">😣 Severe</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Notes (symptoms, feelings, triggers)</label>
+        <textarea id="entryNotes" placeholder="Optional notes..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-check"></i> Save Entry</button>
+    </form>
+  </div>
+</div>
+
+<!-- Reintro Entry Sheet -->
+<div class="overlay" id="reintroOverlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h3>Log Challenge</h3>
+      <button class="sheet-close" id="closeReintroSheet"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form id="reintroForm">
+      <div class="field">
+        <label>FODMAP group being tested</label>
+        <select id="reintroGroup">
+          <option>Fructans (wheat, garlic, onion)</option>
+          <option>Lactose (dairy)</option>
+          <option>Fructose (honey, apple)</option>
+          <option>Galactans / GOS (legumes)</option>
+          <option>Mannitol (mushrooms, cauliflower)</option>
+          <option>Sorbitol (stone fruits)</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Food tested</label>
+        <input type="text" id="reintroFood" placeholder="e.g. Garlic, milk, honey" required>
+      </div>
+      <div class="field">
+        <label>Date started</label>
+        <input type="date" id="reintroDate" required>
+      </div>
+      <div class="field">
+        <label>Result</label>
+        <select id="reintroResult">
+          <option value="pending">Still testing</option>
+          <option value="pass">Tolerated well</option>
+          <option value="fail">Triggered symptoms</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Notes</label>
+        <textarea id="reintroNotes" placeholder="Portion size, symptoms, timing..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-check"></i> Save Challenge</button>
+    </form>
+  </div>
+</div>
+
+<!-- Reference category sheet -->
+<div class="overlay" id="refOverlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h3 id="refSheetTitle">Category</h3>
+      <button class="sheet-close" id="closeRefSheet"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="food-list" id="refSheetList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     FOOD DATABASE
+     light: 'green' (low fodmap / safe), 'yellow' (moderate / caution, portion-dependent),
+            'red' (high fodmap / avoid in elimination)
+  ============================================================ */
+  const FOODS = [
+    // Proteins
+    {name:"Chicken Breast", cat:"Proteins", light:"green", note:"Plain chicken is naturally low FODMAP. Watch marinades & sauces for garlic/onion."},
+    {name:"Eggs", cat:"Proteins", light:"green", note:"Naturally FODMAP-free in any preparation."},
+    {name:"Firm Tofu", cat:"Proteins", light:"green", note:"Firm/extra-firm tofu is low FODMAP; silken tofu has more FODMAPs."},
+    {name:"Salmon", cat:"Proteins", light:"green", note:"All plain fish and shellfish are low FODMAP."},
+    {name:"Beef", cat:"Proteins", light:"green", note:"Plain beef cuts are low FODMAP; check processed/marinated versions."},
+    {name:"Tempeh", cat:"Proteins", light:"green", note:"Fermentation lowers FODMAP content, generally well tolerated."},
+    {name:"Peanut Butter", cat:"Proteins", light:"green", note:"Low FODMAP in 2 tbsp servings."},
+    {name:"Canned Chickpeas (1/4 cup)", cat:"Proteins", light:"yellow", note:"Low FODMAP at 1/4 cup drained; higher amounts become high FODMAP (GOS)."},
+    {name:"Kidney Beans", cat:"Proteins", light:"red", note:"High in GOS (galacto-oligosaccharides); a common gut trigger."},
+    {name:"Lentils", cat:"Proteins", light:"red", note:"High in GOS; canned/rinsed lentils in small amounts may be tolerated."},
+    {name:"Black Beans", cat:"Proteins", light:"red", note:"High FODMAP legume, significant GOS content."},
+    {name:"Cashews", cat:"Proteins", light:"red", note:"High FODMAP nut; almonds are a better low FODMAP choice (10 nuts)."},
+    {name:"Pistachios", cat:"Proteins", light:"red", note:"High in fructans, commonly triggers symptoms."},
+    {name:"Silken Tofu", cat:"Proteins", light:"yellow", note:"Higher FODMAP than firm tofu; keep portions small."},
+
+    // Vegetables
+    {name:"Carrots", cat:"Vegetables", light:"green", note:"Low FODMAP raw or cooked, a reliable staple vegetable."},
+    {name:"Spinach", cat:"Vegetables", light:"green", note:"Low FODMAP leafy green, great in most servings."},
+    {name:"Zucchini", cat:"Vegetables", light:"green", note:"Low FODMAP in normal serving sizes."},
+    {name:"Bell Peppers (red)", cat:"Vegetables", light:"green", note:"Red bell pepper is low FODMAP; green pepper has more fructans in large amounts."},
+    {name:"Cucumber", cat:"Vegetables", light:"green", note:"Low FODMAP, hydrating and gentle on digestion."},
+    {name:"Tomato", cat:"Vegetables", light:"green", note:"Low FODMAP at typical serving (1 medium); cherry tomatoes in moderation."},
+    {name:"Eggplant", cat:"Vegetables", light:"green", note:"Low FODMAP cooked vegetable."},
+    {name:"Green Beans", cat:"Vegetables", light:"green", note:"Low FODMAP in normal portions."},
+    {name:"Potato", cat:"Vegetables", light:"green", note:"Low FODMAP regardless of preparation (watch toppings)."},
+    {name:"Lettuce", cat:"Vegetables", light:"green", note:"Low FODMAP salad base."},
+    {name:"Bok Choy", cat:"Vegetables", light:"green", note:"Low FODMAP Asian green."},
+    {name:"Garlic", cat:"Vegetables", light:"red", note:"Very high in fructans; one of the top FODMAP triggers. Use garlic-infused oil instead."},
+    {name:"Onion", cat:"Vegetables", light:"red", note:"Very high in fructans; major trigger for most people with IBS."},
+    {name:"Mushrooms", cat:"Vegetables", light:"red", note:"High in mannitol (polyol); oyster mushrooms are a lower FODMAP alternative."},
+    {name:"Cauliflower", cat:"Vegetables", light:"red", note:"High in mannitol; commonly causes bloating."},
+    {name:"Asparagus", cat:"Vegetables", light:"red", note:"High in fructans, even in small servings."},
+    {name:"Artichoke", cat:"Vegetables", light:"red", note:"Very high FODMAP vegetable, best avoided in elimination."},
+    {name:"Snow Peas", cat:"Vegetables", light:"yellow", note:"Moderate FODMAP; small portions (5 pods) may be tolerated."},
+    {name:"Sweet Potato", cat:"Vegetables", light:"yellow", note:"Low FODMAP at 1/2 cup; larger portions increase mannitol load."},
+    {name:"Broccoli", cat:"Vegetables", light:"yellow", note:"Florets are low FODMAP in small amounts; the stalk is higher FODMAP."},
+    {name:"Kale", cat:"Vegetables", light:"green", note:"Low FODMAP leafy green."},
+
+    // Fruits
+    {name:"Banana (unripe)", cat:"Fruits", light:"green", note:"Unripe/firm banana is low FODMAP; ripe banana has more fructans."},
+    {name:"Blueberries", cat:"Fruits", light:"green", note:"Low FODMAP berry, antioxidant-rich."},
+    {name:"Strawberries", cat:"Fruits", light:"green", note:"Low FODMAP at normal serving sizes."},
+    {name:"Grapes", cat:"Fruits", light:"green", note:"Low FODMAP fruit, easy snack option."},
+    {name:"Oranges", cat:"Fruits", light:"green", note:"Low FODMAP citrus fruit."},
+    {name:"Kiwi", cat:"Fruits", light:"green", note:"Low FODMAP and good fiber source."},
+    {name:"Pineapple", cat:"Fruits", light:"green", note:"Low FODMAP tropical fruit."},
+    {name:"Cantaloupe", cat:"Fruits", light:"yellow", note:"Low FODMAP in small servings; larger amounts add up in mannitol."},
+    {name:"Apple", cat:"Fruits", light:"red", note:"High in fructose and sorbitol; a very common trigger fruit."},
+    {name:"Pear", cat:"Fruits", light:"red", note:"High in fructose and sorbitol, similar to apple."},
+    {name:"Mango", cat:"Fruits", light:"red", note:"High in excess fructose."},
+    {name:"Watermelon", cat:"Fruits", light:"red", note:"High FODMAP fruit due to fructose, mannitol and oligos."},
+    {name:"Cherries", cat:"Fruits", light:"red", note:"High in sorbitol; frequently causes symptoms."},
+    {name:"Peach", cat:"Fruits", light:"red", note:"High in sorbitol and fructose."},
+    {name:"Avocado", cat:"Fruits", light:"yellow", note:"Low FODMAP at 1/8 avocado; larger servings are high in sorbitol."},
+    {name:"Dried Fruit (raisins, dates)", cat:"Fruits", light:"red", note:"Concentrated fructans/fructose; easy to overeat. Avoid in elimination."},
+
+    // Grains
+    {name:"Oats", cat:"Grains", light:"green", note:"Low FODMAP at 1/2 cup dry; a gentle gluten-free option."},
+    {name:"Rice (white or brown)", cat:"Grains", light:"green", note:"Naturally low FODMAP staple grain."},
+    {name:"Quinoa", cat:"Grains", light:"green", note:"Low FODMAP gluten-free grain, complete protein."},
+    {name:"Gluten-Free Bread", cat:"Grains", light:"green", note:"Most GF breads avoid wheat fructans; check ingredient list for high FODMAP additives."},
+    {name:"Corn Tortillas", cat:"Grains", light:"green", note:"Low FODMAP at 2-3 tortillas."},
+    {name:"Sourdough Spelt Bread", cat:"Grains", light:"green", note:"Fermentation reduces fructans, often well tolerated."},
+    {name:"Polenta / Cornmeal", cat:"Grains", light:"green", note:"Low FODMAP grain product."},
+    {name:"Wheat Bread", cat:"Grains", light:"red", note:"High in fructans from wheat; a major elimination-phase avoid."},
+    {name:"Barley", cat:"Grains", light:"red", note:"High fructan grain, commonly used in beer and soups."},
+    {name:"Rye Bread", cat:"Grains", light:"red", note:"High in fructans similar to wheat."},
+    {name:"Couscous", cat:"Grains", light:"red", note:"Made from wheat; high FODMAP."},
+    {name:"Wheat Pasta", cat:"Grains", light:"yellow", note:"Low FODMAP at small serving (about 1/2 cup cooked); larger portions become high FODMAP."},
+
+    // Dairy
+    {name:"Lactose-Free Milk", cat:"Dairy", light:"green", note:"Lactase-treated milk has no lactose, low FODMAP."},
+    {name:"Hard Cheese (cheddar, parmesan)", cat:"Dairy", light:"green", note:"Aged hard cheeses are naturally very low in lactose."},
+    {name:"Almond Milk", cat:"Dairy", light:"green", note:"Plant-based, low FODMAP dairy alternative (check for added inulin)."},
+    {name:"Brie / Camembert", cat:"Dairy", light:"green", note:"Soft-ripened cheeses are low in lactose despite being 'soft'."},
+    {name:"Lactose-Free Yogurt", cat:"Dairy", light:"green", note:"Good source of probiotics without the lactose load."},
+    {name:"Butter", cat:"Dairy", light:"green", note:"Negligible lactose content, low FODMAP."},
+    {name:"Cow's Milk", cat:"Dairy", light:"red", note:"High in lactose; a very common trigger for IBS symptoms."},
+    {name:"Regular Yogurt", cat:"Dairy", light:"red", note:"High lactose content unless labeled lactose-free."},
+    {name:"Ice Cream", cat:"Dairy", light:"red", note:"High in lactose and often high FODMAP add-ins."},
+    {name:"Soft Cheese (ricotta, cottage)", cat:"Dairy", light:"red", note:"Higher moisture soft cheeses retain more lactose."},
+    {name:"Condensed Milk", cat:"Dairy", light:"red", note:"Concentrated lactose, best avoided in elimination."},
+
+    // Sweeteners / Misc (kept under existing categories for breadth)
+    {name:"Maple Syrup", cat:"Grains", light:"green", note:"Low FODMAP natural sweetener, unlike honey."},
+    {name:"Honey", cat:"Fruits", light:"red", note:"High in excess fructose; swap for maple syrup."},
+    {name:"Garlic-Infused Oil", cat:"Vegetables", light:"green", note:"Fructans aren't oil-soluble, so the oil carries flavor without the FODMAPs."},
+  ];
+
+  const CATEGORY_ICONS = {
+    "Proteins":"fa-drumstick-bite",
+    "Vegetables":"fa-carrot",
+    "Fruits":"fa-apple-whole",
+    "Grains":"fa-wheat-awn",
+    "Dairy":"fa-cheese"
+  };
+
+  const LIGHT_LABEL = {green:"Low FODMAP", yellow:"Moderate", red:"High FODMAP"};
+
+  /* ============================================================
+     STATE / STORAGE
+  ============================================================ */
+  const LS_KEYS = {
+    phase: "fodmap_phase",
+    phaseStart: "fodmap_phase_start",
+    diary: "fodmap_diary",
+    reintro: "fodmap_reintro"
+  };
+
+  function load(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    }catch(e){ return fallback; }
+  }
+  function save(key, val){
+    localStorage.setItem(key, JSON.stringify(val));
+  }
+
+  let state = {
+    phase: load(LS_KEYS.phase, 0), // 0=Elimination,1=Reintroduction,2=Personalization
+    phaseStart: load(LS_KEYS.phaseStart, Date.now()),
+    diary: load(LS_KEYS.diary, []),
+    reintro: load(LS_KEYS.reintro, [])
+  };
+
+  function persist(){
+    save(LS_KEYS.phase, state.phase);
+    save(LS_KEYS.phaseStart, state.phaseStart);
+    save(LS_KEYS.diary, state.diary);
+    save(LS_KEYS.reintro, state.reintro);
+  }
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  function toast(msg){
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast._tm);
+    toast._tm = setTimeout(()=> t.classList.remove("show"), 2200);
+  }
+
+  /* ============================================================
+     TAB NAVIGATION
+  ============================================================ */
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const sections = document.querySelectorAll(".section");
+  tabButtons.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      tabButtons.forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      const target = btn.dataset.tab;
+      sections.forEach(s=> s.classList.toggle("active", s.id === "section-"+target));
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+  });
+
+  /* ============================================================
+     FOODS SECTION
+  ============================================================ */
+  const foodListEl = document.getElementById("foodList");
+  const foodSearchEl = document.getElementById("foodSearch");
+  const lightFiltersEl = document.getElementById("lightFilters");
+  const catFiltersEl = document.getElementById("catFilters");
+
+  let activeLight = "all";
+  let activeCat = "all";
+  let searchTerm = "";
+
+  // build category chips dynamically
+  const categories = [...new Set(FOODS.map(f=>f.cat))];
+  categories.forEach(cat=>{
+    const chip = document.createElement("div");
+    chip.className = "chip";
+    chip.dataset.cat = cat;
+    chip.textContent = cat;
+    catFiltersEl.appendChild(chip);
+  });
+
+  lightFiltersEl.addEventListener("click", (e)=>{
+    const chip = e.target.closest(".chip");
+    if(!chip) return;
+    [...lightFiltersEl.children].forEach(c=>c.classList.remove("active"));
+    chip.classList.add("active");
+    activeLight = chip.dataset.light;
+    renderFoods();
+  });
+
+  catFiltersEl.addEventListener("click", (e)=>{
+    const chip = e.target.closest(".chip");
+    if(!chip) return;
+    [...catFiltersEl.children].forEach(c=>c.classList.remove("active"));
+    chip.classList.add("active");
+    activeCat = chip.dataset.cat;
+    renderFoods();
+  });
+
+  foodSearchEl.addEventListener("input", ()=>{
+    searchTerm = foodSearchEl.value.trim().toLowerCase();
+    renderFoods();
+  });
+
+  function renderFoods(){
+    let results = FOODS.filter(f=>{
+      if(activeLight !== "all" && f.light !== activeLight) return false;
+      if(activeCat !== "all" && f.cat !== activeCat) return false;
+      if(searchTerm && !f.name.toLowerCase().includes(searchTerm)) return false;
+      return true;
+    });
+    results.sort((a,b)=> a.name.localeCompare(b.name));
+
+    if(results.length === 0){
+      foodListEl.innerHTML = `<div class="empty-state"><i class="fa-solid fa-magnifying-glass"></i>No foods match your search.</div>`;
+      return;
+    }
+
+    foodListEl.innerHTML = results.map(f=>`
+      <div class="food-item ${f.light}" data-name="${escapeAttr(f.name)}">
+        <div class="light-dot ${f.light}"></div>
+        <div class="food-info">
+          <div class="food-name">${escapeHtml(f.name)}</div>
+          <div class="food-meta">${escapeHtml(f.cat)}</div>
+        </div>
+        <span class="badge ${f.light}">${LIGHT_LABEL[f.light]}</span>
+      </div>
+    `).join("");
+  }
+
+  foodListEl.addEventListener("click", (e)=>{
+    const item = e.target.closest(".food-item");
+    if(!item) return;
+    const food = FOODS.find(f=>f.name === item.dataset.name);
+    if(food) openFoodDetail(food);
+  });
+
+  function openFoodDetail(food){
+    document.getElementById("foodDetailName").textContent = food.name;
+    document.getElementById("foodDetailBody").innerHTML = `
+      <div class="detail-light">
+        <div class="light-dot ${food.light}"></div>
+        <div class="label">${LIGHT_LABEL[food.light]}</div>
+      </div>
+      <div class="detail-row">
+        <div class="k">Category</div>
+        <div class="v">${escapeHtml(food.cat)}</div>
+      </div>
+      <div class="detail-row">
+        <div class="k">Why</div>
+        <div class="v">${escapeHtml(food.note)}</div>
+      </div>
+    `;
+    openOverlay("foodOverlay");
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function escapeAttr(s){ return escapeHtml(s); }
+
+  /* ============================================================
+     OVERLAYS
+  ============================================================ */
+  function openOverlay(id){
+    document.getElementById(id).classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeOverlay(id){
+    document.getElementById(id).classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  document.querySelectorAll(".overlay").forEach(ov=>{
+    ov.addEventListener("click", (e)=>{
+      if(e.target === ov) closeOverlay(ov.id);
+    });
+  });
+  document.getElementById("closeFoodSheet").addEventListener("click", ()=> closeOverlay("foodOverlay"));
+  document.getElementById("closeDiarySheet").addEventListener("click", ()=> closeOverlay("diaryOverlay"));
+  document.getElementById("closeReintroSheet").addEventListener("click", ()=> closeOverlay("reintroOverlay"));
+  document.getElementById("closeRefSheet").addEventListener("click", ()=> closeOverlay("refOverlay"));
+
+  /* ============================================================
+     PHASE TRACKER
+  ============================================================ */
+  const PHASES = [
+    {
+      name: "Elimination",
+      icon:"fa-ban",
+      desc: "Strictly avoid high FODMAP foods for 2–6 weeks to calm symptoms and establish a baseline.",
+      tips: [
+        "Stick to green-light foods from the Foods tab",
+        "Read labels for hidden onion, garlic & wheat",
+        "Track every meal and symptom in your diary",
+        "Typical duration: 2–6 weeks"
+      ]
+    },
+    {
+      name:"Reintroduction",
+      icon:"fa-vial",
+      desc:"Systematically reintroduce one FODMAP group at a time to identify your personal triggers.",
+      tips:[
+        "Test one FODMAP group every 3 days",
+        "Start with a small portion, then increase",
+        "Return to elimination diet between challenges",
+        "Log every challenge in the Reintro tab"
+      ]
+    },
+    {
+      name:"Personalization",
+      icon:"fa-seedling",
+      desc:"Build your long-term, personalized diet based on what you've learned about your tolerances.",
+      tips:[
+        "Reintroduce well-tolerated foods permanently",
+        "Keep confirmed triggers limited or avoided",
+        "Re-test triggers periodically — tolerance can change",
+        "Aim for the least restrictive diet that keeps you well"
+      ]
+    }
+  ];
+
+  function renderPhase(){
+    const progressEl = document.getElementById("phaseProgress");
+    progressEl.innerHTML = PHASES.map((p,i)=>{
+      const cls = i < state.phase ? "done" : (i === state.phase ? "current" : "");
+      return `<div class="phase-step ${cls}">
+        <div class="dot">${i < state.phase ? '<i class="fa-solid fa-check"></i>' : (i+1)}</div>
+        <div class="label">${p.name}</div>
+      </div>`;
+    }).join("");
+
+    const p = PHASES[state.phase];
+    document.getElementById("phaseDetail").innerHTML = `
+      <h3><i class="fa-solid ${p.icon}"></i> ${p.name} Phase</h3>
+      <p>${p.desc}</p>
+      <ul>${p.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
+    `;
+
+    const days = Math.max(1, Math.floor((Date.now() - state.phaseStart) / 86400000) + 1);
+    document.getElementById("phaseDayCount").innerHTML = `Day ${days} <span>in this phase</span>`;
+
+    document.getElementById("prevPhaseBtn").disabled = state.phase === 0;
+    document.getElementById("prevPhaseBtn").style.opacity = state.phase === 0 ? 0.5 : 1;
+    const nextBtn = document.getElementById("nextPhaseBtn");
+    if(state.phase === PHASES.length - 1){
+      nextBtn.innerHTML = `<i class="fa-solid fa-flag-checkered"></i> Final Phase`;
+      nextBtn.disabled = true;
+      nextBtn.style.opacity = 0.6;
+    } else {
+      nextBtn.innerHTML = `Next Phase <i class="fa-solid fa-arrow-right"></i>`;
+      nextBtn.disabled = false;
+      nextBtn.style.opacity = 1;
+    }
+  }
+
+  document.getElementById("nextPhaseBtn").addEventListener("click", ()=>{
+    if(state.phase < PHASES.length - 1){
+      state.phase++;
+      state.phaseStart = Date.now();
+      persist();
+      renderPhase();
+      toast(`Moved to ${PHASES[state.phase].name} phase`);
+    }
+  });
+  document.getElementById("prevPhaseBtn").addEventListener("click", ()=>{
+    if(state.phase > 0){
+      state.phase--;
+      state.phaseStart = Date.now();
+      persist();
+      renderPhase();
+      toast(`Back to ${PHASES[state.phase].name} phase`);
+    }
+  });
+  document.getElementById("resetPhaseDayBtn").addEventListener("click", ()=>{
+    state.phaseStart = Date.now();
+    persist();
+    renderPhase();
+    toast("Day counter reset");
+  });
+
+  /* ============================================================
+     DIARY
+  ============================================================ */
+  const entryTypeEl = document.getElementById("entryType");
+  const entryTitleLabel = document.getElementById("entryTitleLabel");
+  entryTypeEl.addEventListener("change", ()=>{
+    entryTitleLabel.textContent = entryTypeEl.value === "meal" ? "What did you eat?" : "Symptom summary";
+    document.getElementById("entryTitle").placeholder = entryTypeEl.value === "meal"
+      ? "e.g. Grilled chicken, rice, spinach"
+      : "e.g. Bloating after lunch";
+  });
+
+  let selectedSeverity = 0;
+  document.querySelectorAll(".severity-opt").forEach(opt=>{
+    opt.addEventListener("click", ()=>{
+      document.querySelectorAll(".severity-opt").forEach(o=>o.classList.remove("active"));
+      opt.classList.add("active");
+      selectedSeverity = parseInt(opt.dataset.sev, 10);
+    });
+  });
+
+  document.getElementById("addDiaryBtn").addEventListener("click", ()=>{
+    document.getElementById("diaryForm").reset();
+    const now = new Date();
+    document.getElementById("entryDate").value = now.toISOString().slice(0,10);
+    document.getElementById("entryTime").value = now.toTimeString().slice(0,5);
+    document.querySelectorAll(".severity-opt").forEach(o=>o.classList.remove("active"));
+    document.querySelector('.severity-opt[data-sev="0"]').classList.add("active");
+    selectedSeverity = 0;
+    entryTypeEl.value = "meal";
+    entryTitleLabel.textContent = "What did you eat?";
+    openOverlay("diaryOverlay");
+  });
+
+  document.getElementById("diaryForm").addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const entry = {
+      id: uid(),
+      type: entryTypeEl.value,
+      date: document.getElementById("entryDate").value,
+      time: document.getElementById("entryTime").value,
+      title: document.getElementById("entryTitle").value.trim(),
+      severity: selectedSeverity,
+      notes: document.getElementById("entryNotes").value.trim()
+    };
+    if(!entry.title) return;
+    state.diary.push(entry);
+    persist();
+    renderDiary();
+    closeOverlay("diaryOverlay");
+    toast("Entry saved");
+  });
+
+  function renderDiary(){
+    const entries = [...state.diary].sort((a,b)=> (b.date+b.time).localeCompare(a.date+a.time));
+
+    document.getElementById("statEntries").textContent = entries.length;
+
+    // streak: consecutive days (including today) with at least one entry
+    const daySet = new Set(entries.map(e=>e.date));
+    let streak = 0;
+    let cursor = new Date();
+    while(true){
+      const key = cursor.toISOString().slice(0,10);
+      if(daySet.has(key)){ streak++; cursor.setDate(cursor.getDate()-1); }
+      else break;
+    }
+    document.getElementById("statStreak").textContent = streak;
+
+    const badDays = new Set(entries.filter(e=>e.severity===2).map(e=>e.date)).size;
+    document.getElementById("statBadDays").textContent = badDays;
+
+    // simple pattern insight: most common meal title text on severe-symptom days
+    const insightBox = document.getElementById("insightBox");
+    const severeMealWords = {};
+    entries.forEach(e=>{
+      if(e.type==="meal" && e.severity>=1){
+        e.title.toLowerCase().split(/[\s,]+/).forEach(w=>{
+          w = w.replace(/[^a-z]/g,"");
+          if(w.length>3){ severeMealWords[w] = (severeMealWords[w]||0)+1; }
+        });
+      }
+    });
+    const sorted = Object.entries(severeMealWords).sort((a,b)=>b[1]-a[1]);
+    if(sorted.length && sorted[0][1] >= 2){
+      insightBox.style.display = "block";
+      insightBox.innerHTML = `<i class="fa-solid fa-lightbulb" style="color:var(--amber-600);"></i> Pattern detected: <strong>"${escapeHtml(sorted[0][0])}"</strong> appears in ${sorted[0][1]} meals logged alongside symptoms. Consider testing this carefully.`;
+    } else {
+      insightBox.style.display = "none";
+    }
+
+    const listEl = document.getElementById("diaryList");
+    if(entries.length === 0){
+      listEl.innerHTML = `<div class="empty-state"><i class="fa-solid fa-book-medical"></i>No entries yet. Start logging your meals and symptoms.</div>`;
+      return;
+    }
+
+    // group by date
+    const groups = {};
+    entries.forEach(e=>{
+      groups[e.date] = groups[e.date] || [];
+      groups[e.date].push(e);
+    });
+
+    const sevIcon = {0:"😊",1:"😐",2:"😣"};
+    const sevText = {0:"None",1:"Mild",2:"Severe"};
+
+    listEl.innerHTML = Object.keys(groups).sort().reverse().map(date=>{
+      const dateLabel = formatDateLabel(date);
+      const items = groups[date].sort((a,b)=> b.time.localeCompare(a.time)).map(e=>`
+        <div class="diary-entry">
+          <button class="del-btn" data-id="${e.id}" title="Delete"><i class="fa-solid fa-trash"></i></button>
+          <div class="top-row">
+            <div>
+              <div class="when">${e.time} · ${e.type === "meal" ? "Meal" : "Symptom"}</div>
+              <div class="meal">${escapeHtml(e.title)}</div>
+            </div>
+            <span class="sev-pill s${e.severity}">${sevIcon[e.severity]} ${sevText[e.severity]}</span>
+          </div>
+          ${e.notes ? `<div class="notes">${escapeHtml(e.notes)}</div>` : ""}
+        </div>
+      `).join("");
+      return `<div class="day-group-title">${dateLabel}</div>${items}`;
+    }).join("");
+  }
+
+  function formatDateLabel(dateStr){
+    const d = new Date(dateStr + "T00:00:00");
+    const today = new Date(); today.setHours(0,0,0,0);
+    const diffDays = Math.round((today - d) / 86400000);
+    if(diffDays === 0) return "Today";
+    if(diffDays === 1) return "Yesterday";
+    return d.toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"});
+  }
+
+  document.getElementById("diaryList").addEventListener("click", (e)=>{
+    const btn = e.target.closest(".del-btn");
+    if(!btn) return;
+    state.diary = state.diary.filter(en=>en.id !== btn.dataset.id);
+    persist();
+    renderDiary();
+    toast("Entry deleted");
+  });
+
+  /* ============================================================
+     REINTRODUCTION TRACKER
+  ============================================================ */
+  document.getElementById("addReintroBtn").addEventListener("click", ()=>{
+    document.getElementById("reintroForm").reset();
+    document.getElementById("reintroDate").value = new Date().toISOString().slice(0,10);
+    openOverlay("reintroOverlay");
+  });
+
+  document.getElementById("reintroForm").addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const test = {
+      id: uid(),
+      group: document.getElementById("reintroGroup").value,
+      food: document.getElementById("reintroFood").value.trim(),
+      date: document.getElementById("reintroDate").value,
+      result: document.getElementById("reintroResult").value,
+      notes: document.getElementById("reintroNotes").value.trim()
+    };
+    if(!test.food) return;
+    state.reintro.push(test);
+    persist();
+    renderReintro();
+    closeOverlay("reintroOverlay");
+    toast("Challenge saved");
+  });
+
+  function renderReintro(){
+    const tests = [...state.reintro].sort((a,b)=> b.date.localeCompare(a.date));
+    document.getElementById("reintroTested").textContent = tests.length;
+    document.getElementById("reintroPassed").textContent = tests.filter(t=>t.result==="pass").length;
+    document.getElementById("reintroFailed").textContent = tests.filter(t=>t.result==="fail").length;
+
+    const listEl = document.getElementById("reintroList");
+    if(tests.length === 0){
+      listEl.innerHTML = `<div class="empty-state"><i class="fa-solid fa-vial-circle-check"></i>No challenges logged yet.</div>`;
+      return;
+    }
+
+    const statusLabel = {pass:"Tolerated", fail:"Triggered", pending:"Testing"};
+    listEl.innerHTML = tests.map(t=>`
+      <div class="test-card">
+        <button class="del-btn" data-id="${t.id}" title="Delete"><i class="fa-solid fa-trash"></i></button>
+        <div class="head">
+          <div>
+            <div class="food-tag">${escapeHtml(t.food)}</div>
+            <div class="grp">${escapeHtml(t.group)} · ${formatDateLabel(t.date)}</div>
+          </div>
+          <span class="status-pill ${t.result}">${statusLabel[t.result]}</span>
+        </div>
+        ${t.notes ? `<div class="notes" style="margin-top:8px;">${escapeHtml(t.notes)}</div>` : ""}
+      </div>
+    `).join("");
+  }
+
+  document.getElementById("reintroList").addEventListener("click", (e)=>{
+    const btn = e.target.closest(".del-btn");
+    if(!btn) return;
+    state.reintro = state.reintro.filter(t=>t.id !== btn.dataset.id);
+    persist();
+    renderReintro();
+    toast("Challenge deleted");
+  });
+
+  /* ============================================================
+     SAFE FOODS QUICK REFERENCE
+  ============================================================ */
+  function renderReference(){
+    const grid = document.getElementById("refCatGrid");
+    grid.innerHTML = categories.map(cat=>{
+      const count = FOODS.filter(f=>f.cat===cat && f.light==="green").length;
+      return `<div class="cat-card" data-cat="${escapeAttr(cat)}">
+        <i class="fa-solid ${CATEGORY_ICONS[cat] || 'fa-bowl-food'}"></i>
+        <div class="name">${escapeHtml(cat)}</div>
+        <div class="count">${count} safe foods</div>
+      </div>`;
+    }).join("");
+  }
+
+  document.getElementById("refCatGrid").addEventListener("click", (e)=>{
+    const card = e.target.closest(".cat-card");
+    if(!card) return;
+    const cat = card.dataset.cat;
+    const safe = FOODS.filter(f=>f.cat===cat && f.light==="green").sort((a,b)=>a.name.localeCompare(b.name));
+    document.getElementById("refSheetTitle").textContent = `${cat} — Safe Picks`;
+    document.getElementById("refSheetList").innerHTML = safe.map(f=>`
+      <div class="food-item green" data-name="${escapeAttr(f.name)}">
+        <div class="light-dot green"></div>
+        <div class="food-info">
+          <div class="food-name">${escapeHtml(f.name)}</div>
+          <div class="food-meta">${escapeHtml(f.note)}</div>
+        </div>
+      </div>
+    `).join("");
+    openOverlay("refOverlay");
+  });
+
+  document.getElementById("refSheetList").addEventListener("click", (e)=>{
+    const item = e.target.closest(".food-item");
+    if(!item) return;
+    const food = FOODS.find(f=>f.name === item.dataset.name);
+    if(food){
+      closeOverlay("refOverlay");
+      setTimeout(()=> openFoodDetail(food), 200);
+    }
+  });
+
+  /* ============================================================
+     INIT
+  ============================================================ */
+  renderFoods();
+  renderPhase();
+  renderDiary();
+  renderReintro();
+  renderReference();
+
+})();
+</script>
+</body>
+</html>
