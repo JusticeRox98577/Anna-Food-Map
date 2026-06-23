@@ -29,7 +29,8 @@ targets:
       path: Generated/Info-iOS.plist
       properties:
         CFBundleDisplayName: Anna Food Map
-        UILaunchScreen: {}
+        UILaunchScreen:
+          UIColorName: LaunchBackground
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         UISupportedInterfaceOrientations:
