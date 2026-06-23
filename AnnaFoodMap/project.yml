@@ -1,0 +1,95 @@
+name: AnnaFoodMap
+options:
+  bundleIdPrefix: com.annafoodmap
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "26.5"
+    macOS: "26.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_PREVIEWS: YES
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  AnnaFoodMap-iOS:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.5"
+    sources:
+      - path: Sources
+      - path: Resources
+        buildPhase: resources
+    info:
+      path: Generated/Info-iOS.plist
+      properties:
+        CFBundleDisplayName: Anna Food Map
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.annafoodmap.ios
+        PRODUCT_NAME: Anna Food Map
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    scheme:
+      gatherCoverageData: false
+
+  AnnaFoodMap-macOS:
+    type: application
+    platform: macOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: Sources
+      - path: Resources
+        buildPhase: resources
+    info:
+      path: Generated/Info-macOS.plist
+      properties:
+        CFBundleDisplayName: Anna Food Map
+        NSHumanReadableCopyright: ""
+        LSApplicationCategoryType: public.app-category.healthcare-fitness
+        LSMinimumSystemVersion: "26.0"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.annafoodmap.mac
+        PRODUCT_NAME: Anna Food Map
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        COMBINE_HIDPI_IMAGES: YES
+        ENABLE_HARDENED_RUNTIME: YES
+    scheme:
+      gatherCoverageData: false
+
+schemes:
+  AnnaFoodMap-iOS:
+    build:
+      targets:
+        AnnaFoodMap-iOS: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+  AnnaFoodMap-macOS:
+    build:
+      targets:
+        AnnaFoodMap-macOS: all
+    run:
+      config: Debug
+    archive:
+      config: Release

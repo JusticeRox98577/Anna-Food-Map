@@ -1,0 +1,13 @@
+# Xcode / XcodeGen generated artifacts
+AnnaFoodMap/*.xcodeproj/
+AnnaFoodMap/*.xcworkspace/
+AnnaFoodMap/Generated/
+
+# Build products
+build/
+DerivedData/
+*.xcuserstate
+*.xcuserdatad/
+
+# macOS
+.DS_Store
