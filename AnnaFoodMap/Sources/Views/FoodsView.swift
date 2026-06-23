@@ -1,15 +1,18 @@
 import SwiftUI
 
 struct FoodsView: View {
+    @EnvironmentObject private var favorites: FavoritesStore
     @State private var searchText = ""
     @State private var lightFilter: FODMAPLight? = nil
     @State private var categoryFilter: FoodCategory? = nil
+    @State private var favoritesOnly = false
     @State private var selectedFood: Food?
 
     private var filteredFoods: [Food] {
         FoodDatabase.all
             .filter { lightFilter == nil || $0.light == lightFilter }
             .filter { categoryFilter == nil || $0.category == categoryFilter }
+            .filter { !favoritesOnly || favorites.isFavorite($0) }
             .filter { searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText) }
             .sorted { $0.name < $1.name }
     }
@@ -44,6 +47,9 @@ struct FoodsView: View {
                             lightFilter = (lightFilter == light) ? nil : light
                         }
                     }
+                    FilterChip(title: "⭐️ Favorites", isActive: favoritesOnly) {
+                        favoritesOnly.toggle()
+                    }
                 }
             }
             ScrollView(.horizontal, showsIndicators: false) {
@@ -70,13 +76,18 @@ struct FoodsView: View {
     @ViewBuilder
     private var foodList: some View {
         if filteredFoods.isEmpty {
-            EmptyStateView(symbolName: "magnifyingglass", message: "No foods match your search.")
-                .padding(.top, 40)
+            EmptyStateView(
+                symbolName: favoritesOnly ? "star" : "magnifyingglass",
+                message: favoritesOnly ? "No favorites yet. Tap the star on a food to save it here." : "No foods match your search."
+            )
+            .padding(.top, 40)
         } else {
             LazyVStack(spacing: 10) {
                 ForEach(filteredFoods) { food in
-                    FoodRow(food: food)
-                        .onTapGesture { selectedFood = food }
+                    FoodRow(food: food, isFavorite: favorites.isFavorite(food)) {
+                        favorites.toggle(food)
+                    }
+                    .onTapGesture { selectedFood = food }
                 }
             }
         }
@@ -107,6 +118,8 @@ struct FilterChip: View {
 
 struct FoodRow: View {
     let food: Food
+    let isFavorite: Bool
+    let onToggleFavorite: () -> Void
 
     var body: some View {
         HStack(spacing: 12) {
@@ -132,6 +145,13 @@ struct FoodRow: View {
                 .background(food.light.badgeBackground)
                 .foregroundStyle(food.light.badgeForeground)
                 .clipShape(Capsule())
+
+            Button(action: onToggleFavorite) {
+                Image(systemName: isFavorite ? "star.fill" : "star")
+                    .font(.system(size: 15))
+                    .foregroundStyle(isFavorite ? Theme.amber600 : Theme.ink300)
+            }
+            .buttonStyle(.plain)
         }
         .padding(12)
         .background(Theme.paper)
@@ -155,6 +175,7 @@ struct FoodRow: View {
 
 struct FoodDetailSheet: View {
     let food: Food
+    @EnvironmentObject private var favorites: FavoritesStore
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -166,6 +187,15 @@ struct FoodDetailSheet: View {
                         Text(food.light.label)
                             .font(.system(size: 18, weight: .bold))
                             .foregroundStyle(Theme.ink900)
+                        Spacer()
+                        Button {
+                            favorites.toggle(food)
+                        } label: {
+                            Image(systemName: favorites.isFavorite(food) ? "star.fill" : "star")
+                                .font(.system(size: 20))
+                                .foregroundStyle(favorites.isFavorite(food) ? Theme.amber600 : Theme.ink300)
+                        }
+                        .buttonStyle(.plain)
                     }
 
                     detailRow(title: "Category", value: food.category.rawValue)

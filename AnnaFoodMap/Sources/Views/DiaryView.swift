@@ -1,11 +1,17 @@
 import SwiftUI
 import SwiftData
 import Foundation
+import Charts
 
 struct DiaryView: View {
     @Query(sort: \DiaryEntry.date, order: .reverse) private var entries: [DiaryEntry]
+    @Query private var reintroTests: [ReintroTest]
     @Environment(\.modelContext) private var modelContext
     @State private var showingForm = false
+
+    @AppStorage("fodmap.reminderEnabled") private var reminderEnabled = false
+    @AppStorage("fodmap.reminderHour") private var reminderHour = 19
+    @AppStorage("fodmap.reminderMinute") private var reminderMinute = 0
 
     private var streak: Int {
         let days = Set(entries.map { $0.day })
@@ -39,6 +45,42 @@ struct DiaryView: View {
         return groups.keys.sorted(by: >).map { day in (day, groups[day]!.sorted { $0.date > $1.date }) }
     }
 
+    private var trendData: [(day: Date, severity: Severity)] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let cutoff = calendar.date(byAdding: .day, value: -13, to: today) ?? today
+        let recent = entries.filter { $0.day >= cutoff }
+        let grouped = Dictionary(grouping: recent, by: { $0.day })
+        let days = grouped.keys.sorted()
+        return days.map { day in
+            let maxSeverity = grouped[day]?.map { $0.severity.rawValue }.max() ?? 0
+            return (day, Severity(rawValue: maxSeverity) ?? .none)
+        }
+    }
+
+    private var exportURL: URL? {
+        ExportManager.writeReportToTemporaryFile(entries: entries, reintroTests: reintroTests)
+    }
+
+    private var reminderTimeBinding: Binding<Date> {
+        Binding(
+            get: {
+                var components = DateComponents()
+                components.hour = reminderHour
+                components.minute = reminderMinute
+                return Calendar.current.date(from: components) ?? Date()
+            },
+            set: { newValue in
+                let components = Calendar.current.dateComponents([.hour, .minute], from: newValue)
+                reminderHour = components.hour ?? 19
+                reminderMinute = components.minute ?? 0
+                if reminderEnabled {
+                    NotificationManager.shared.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
+                }
+            }
+        )
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -47,6 +89,10 @@ struct DiaryView: View {
                 if let insight = insightText {
                     insightCard(insight)
                 }
+                if !trendData.isEmpty {
+                    trendChartCard
+                }
+                reminderCard
                 addButton
 
                 if entries.isEmpty {
@@ -75,9 +121,98 @@ struct DiaryView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                if entries.isEmpty && reintroTests.isEmpty {
+                    EmptyView()
+                } else if let exportURL {
+                    ShareLink(item: exportURL) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                }
+            }
+        }
         .sheet(isPresented: $showingForm) {
             DiaryEntryForm()
         }
+    }
+
+    private var trendChartCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Symptom Trend (14 Days)")
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(Theme.ink700)
+
+            Chart(trendData, id: \.day) { point in
+                BarMark(
+                    x: .value("Day", point.day, unit: .day),
+                    y: .value("Severity", point.severity.rawValue)
+                )
+                .foregroundStyle(severityColor(point.severity))
+                .cornerRadius(4)
+            }
+            .chartYScale(domain: 0...2)
+            .chartYAxis {
+                AxisMarks(values: [0, 1, 2]) { value in
+                    AxisGridLine()
+                    AxisValueLabel {
+                        if let raw = value.as(Int.self), let severity = Severity(rawValue: raw) {
+                            Text(severity.emoji)
+                        }
+                    }
+                }
+            }
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: 2)) { _ in
+                    AxisGridLine()
+                    AxisValueLabel(format: .dateTime.month(.abbreviated).day())
+                }
+            }
+            .frame(height: 140)
+        }
+        .padding(14)
+        .cardStyle()
+    }
+
+    private func severityColor(_ severity: Severity) -> Color {
+        switch severity {
+        case .none: return Theme.green500
+        case .mild: return Theme.amber400
+        case .severe: return Theme.red400
+        }
+    }
+
+    private var reminderCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Toggle(isOn: $reminderEnabled) {
+                Label("Daily log reminder", systemImage: "bell.fill")
+                    .font(.system(size: 13.5, weight: .semibold))
+                    .foregroundStyle(Theme.ink700)
+            }
+            .tint(Theme.green600)
+            .onChange(of: reminderEnabled) { _, newValue in
+                if newValue {
+                    Task {
+                        let granted = await NotificationManager.shared.requestAuthorization()
+                        if granted {
+                            NotificationManager.shared.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
+                        } else {
+                            reminderEnabled = false
+                        }
+                    }
+                } else {
+                    NotificationManager.shared.cancelDailyReminder()
+                }
+            }
+
+            if reminderEnabled {
+                DatePicker("Reminder time", selection: reminderTimeBinding, displayedComponents: .hourAndMinute)
+                    .font(.system(size: 13.5))
+                    .foregroundStyle(Theme.ink700)
+            }
+        }
+        .padding(14)
+        .cardStyle()
     }
 
     private var statRow: some View {

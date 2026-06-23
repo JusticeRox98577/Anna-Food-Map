@@ -6,6 +6,8 @@ import UIKit
 
 @main
 struct AnnaFoodMapApp: App {
+    @StateObject private var favorites = FavoritesStore()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([DiaryEntry.self, ReintroTest.self])
         let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -30,6 +32,7 @@ struct AnnaFoodMapApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environmentObject(favorites)
         }
         .modelContainer(sharedModelContainer)
         #if os(macOS)

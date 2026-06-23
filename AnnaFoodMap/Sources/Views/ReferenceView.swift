@@ -73,6 +73,7 @@ struct CategoryCard: View {
 struct CategorySafeFoodsSheet: View {
     let category: FoodCategory
     let onSelect: (Food) -> Void
+    @EnvironmentObject private var favorites: FavoritesStore
     @Environment(\.dismiss) private var dismiss
 
     private var safeFoods: [Food] {
@@ -93,6 +94,14 @@ struct CategorySafeFoodsSheet: View {
                                 Text(food.note).font(.system(size: 12)).foregroundStyle(Theme.ink500)
                             }
                             Spacer()
+                            Button {
+                                favorites.toggle(food)
+                            } label: {
+                                Image(systemName: favorites.isFavorite(food) ? "star.fill" : "star")
+                                    .font(.system(size: 15))
+                                    .foregroundStyle(favorites.isFavorite(food) ? Theme.amber600 : Theme.ink300)
+                            }
+                            .buttonStyle(.plain)
                         }
                         .padding(12)
                         .cardStyle()
